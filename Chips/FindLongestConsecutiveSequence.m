@@ -1,5 +1,10 @@
 #import <Foundation/Foundation.h>
 
+/*
+ * 找出最长连续数字序列
+ * 在本例中应当输出 1 2 3
+ */
+
 int main(int argc, char *argv[]) {
 	@autoreleasepool {
 		NSArray<NSNumber *> *valueArray = @[@(31),@(6),@(32),@(1),@(3),@(2)];
