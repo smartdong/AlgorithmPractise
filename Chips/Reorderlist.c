@@ -23,6 +23,7 @@ void addNode(ListNode *head, int data) {
 }
 
 void printList(ListNode *head) {
+	head = head->next;
 	while (head) {
 		printf("%d ",head->data);
 		head = head->next;
