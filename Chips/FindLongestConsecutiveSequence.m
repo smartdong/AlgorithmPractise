@@ -1,18 +1,19 @@
+
 #import <Foundation/Foundation.h>
 
 /*
  * 找出最长连续数字序列
- * 在本例中应当输出 1 2 3
+ * 在本例中应当输出 5 6 7 8 9
  */
 
 int main(int argc, char *argv[]) {
 	@autoreleasepool {
-		NSArray<NSNumber *> *valueArray = @[@(31),@(6),@(32),@(1),@(3),@(2)];
+		NSArray<NSNumber *> *valueArray = @[@(31),@(6),@(32),@(1),@(3),@(2),@(5),@(9),@(12),@(8),@(19),@(7)];
 		
-		NSMutableDictionary<NSNumber *,NSValue *> *map = [NSMutableDictionary dictionary];
+		NSMutableDictionary<NSNumber *,NSValue *> *rangeMap = [NSMutableDictionary dictionary];
 		
-		NSUInteger length = 0;
-		NSNumber *key = nil;
+		NSUInteger currentMaxLength = 0;
+		NSNumber *maxLengthNumber = nil;
 		
 		for (NSInteger i = 0 ; i < valueArray.count ; i++) {			
 			NSInteger val = valueArray[i].integerValue;
@@ -20,8 +21,8 @@ int main(int argc, char *argv[]) {
 			NSInteger minValue = val;
 			NSInteger maxValue = val;
 			
-			NSValue *valueForSub = [map objectForKey:@(val-1)];
-			NSValue *valueForAdd = [map objectForKey:@(val+1)];
+			NSValue *valueForSub = [rangeMap objectForKey:@(val-1)];
+			NSValue *valueForAdd = [rangeMap objectForKey:@(val+1)];
 			
 			if (valueForSub) {
 				CGPoint pointForSub = valueForSub.pointValue;
@@ -50,29 +51,28 @@ int main(int argc, char *argv[]) {
 			CGPoint currentRange = CGPointMake(minValue, maxValue);
 			
 			if (valueForSub) {
-				[map setObject:[NSValue valueWithPoint:currentRange] forKey:@(val-1)];
+				[rangeMap setObject:[NSValue valueWithPoint:currentRange] forKey:@(val-1)];
 			}
 
 			if (valueForAdd) {
-				[map setObject:[NSValue valueWithPoint:currentRange] forKey:@(val+1)];
+				[rangeMap setObject:[NSValue valueWithPoint:currentRange] forKey:@(val+1)];
 			}
 			
-			[map setObject:[NSValue valueWithPoint:currentRange] forKey:@(val)];
+			[rangeMap setObject:[NSValue valueWithPoint:currentRange] forKey:@(val)];
 			
 			NSUInteger currentLength = maxValue - minValue;
-			if (currentLength > length) {
-				length = currentLength;
-				key = @(val);
+			if (currentLength > currentMaxLength) {
+				currentMaxLength = currentLength;
+				maxLengthNumber = @(val);
 			}
 			
 			if ((i+1) >= valueArray.count) {
 				NSString *numberSequence = [NSString string];
-				CGPoint maxRange = [map objectForKey:key].pointValue;
+				CGPoint maxRange = [rangeMap objectForKey:maxLengthNumber].pointValue;
 				for (NSInteger i = maxRange.x ; i <= maxRange.y ; i++) {
-					numberSequence = [numberSequence stringByAppendingString:@(i).stringValue];
-					numberSequence = [numberSequence stringByAppendingString:@" "];
+					numberSequence = [numberSequence stringByAppendingString:[NSString stringWithFormat:@"%@ ",@(i).stringValue]];
 				}
-				NSLog(@"max length = %@ , and the number sequence is : %@",@(length+1),numberSequence);
+				NSLog(@"max length = %@ , and the number sequence is : %@",@(currentMaxLength+1),numberSequence);
 			}
 		}
 	}
