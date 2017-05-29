@@ -32,10 +32,9 @@ int main(int argc, char *argv[]) {
 				maxValue = valueForAdd.pointValue.y;
 			}
 			
-			CGPoint currentRange = CGPointMake(minValue, maxValue);
-			
-			[rangeMap setObject:[NSValue valueWithPoint:currentRange] forKey:@(minValue)];
-			[rangeMap setObject:[NSValue valueWithPoint:currentRange] forKey:@(maxValue)];
+			NSValue *currentRange = [NSValue valueWithPoint:CGPointMake(minValue, maxValue)];
+			[rangeMap setObject:currentRange forKey:@(minValue)];
+			[rangeMap setObject:currentRange forKey:@(maxValue)];
 			
 			NSUInteger currentLength = maxValue - minValue;
 			if (currentLength > currentMaxLength) {
