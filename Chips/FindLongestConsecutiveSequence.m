@@ -39,7 +39,7 @@ int main(int argc, char *argv[]) {
 			NSUInteger currentLength = maxValue - minValue;
 			if (currentLength > currentMaxLength) {
 				currentMaxLength = currentLength;
-				maxLengthNumber = @(val);
+				maxLengthNumber = @(maxValue);
 			}
 		}
 		
